@@ -69,5 +69,49 @@ class Insession{
     mysqli_select_db($this->conn, $database);
     return true;
   }
+  function getDatabases(){
+    $databases = array();
+    $r = $this->query("SHOW DATABASES");
+    while($row = mysqli_fetch_array($r, MYSQLI_NUM)){
+      $databases[] = $row[0];
+    }
+    return $databases;
+  }
+  function getColumns($table){
+    $columns = array();
+    $r = $this->query("SHOW COLUMNS FROM `$table`");
+    while($row = mysqli_fetch_array($r, MYSQLI_NUM)){
+      $columns[] = $row[0];
+    }
+    return $columns;
+  }
+
+
+
+
+
+
+  function displayError($error){
+    $errorToDisplay = '
+    <div id="PHPInsessionError" style="width: 100%; position: fixed; top: 20%; padding: 10px; border: 2px solid black; background-color: #222; color: white;">
+      <button style="position: absolute; right: 0px; background-color: white; color: black; border: 1px solid white;" onclick="closePHPInsessionError(this)">X</button>
+      <h3 style="padding: 0; margin: 0;">PHP Insession has experienced the following errors</h3>
+      <p>$error<p>
+    </div>
+    ';
+    if($this->error == true){
+      echo $errorToDisplay;
+    }else{
+      $errorToDisplay .= '
+      <script>
+      function closePHPInsessionError(el){
+        el.parentNode.style.display = "none";
+      }
+      </script>';
+      $this->error = true;
+      echo $errorToDisplay;
+    }
+
+  }
 }
 ?>
