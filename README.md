@@ -29,3 +29,11 @@ This will run the $class->query("SQL QUery") function inside the class.
 Make sure that you have been connected to the MySQL database when using this command.
 
 This class file will include most MySQL queries and returned data will be in arrays
+
+FUNCTIONS
+
+connect($database)	Connects to MySQL server. If database specified, selects database on connection.
+query($query)		Sends the input query to the MySQL database used in the connection above.
+selectDb($database)	Selects a different database.
+getDatabases()		Returns an array of database names.
+getColumns($table)	Returns an array of column names in specified table.
